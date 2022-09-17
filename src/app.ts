@@ -75,7 +75,6 @@ function checkInputs(ownedList: ITemtemGDoc[], missingList: ITemtemGDoc[]) {
     });
 
     const allowMintIfOwnedDamaged: boolean = process.env.ALLOW_MINT_IF_OWNED_DAMAGED === 'true';
-    console.log(allowMintIfOwnedDamaged);
     missingList.forEach((missing) => {
         if (!missing.temtem) return;
 
