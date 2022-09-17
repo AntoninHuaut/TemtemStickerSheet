@@ -75,14 +75,15 @@ function checkInputs(ownedList: ITemtemGDoc[], missingList: ITemtemGDoc[]) {
     });
 
     const allowMintIfOwnedDamaged: boolean = process.env.ALLOW_MINT_IF_OWNED_DAMAGED === 'true';
+    const allowDamagedIfNotOwnedAny: boolean = process.env.ALLOW_DAMAGED_IF_NOT_OWNED_ANY === 'true';
     missingList.forEach((missing) => {
         if (!missing.temtem) return;
 
         const temtem = stripParenthesisContent(missing.temtem.toLowerCase());
-        if (haveDamaged.includes(temtem) && (allowMintIfOwnedDamaged || missing.nbDamaged > 0)) {
+        if (haveDamaged.includes(temtem) && (allowDamagedIfNotOwnedAny || missing.nbDamaged > 0)) {
             iLookFor.push({ temtem, type: 'damaged', nbDamaged: missing.nbDamaged });
         }
-        if (haveMint.includes(temtem)) {
+        if (haveMint.includes(temtem) && (allowMintIfOwnedDamaged || missing.nbDamaged === 0)) {
             iLookFor.push({ temtem, type: 'mint', nbDamaged: missing.nbDamaged });
         }
     });
