@@ -1,0 +1,25 @@
+{
+  "name": "temtemstickersheet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/app.js",
+    "dev": "ts-node ./src/app.ts"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^18.7.18",
+    "csv-string": "^4.1.0",
+    "dotenv": "^16.0.2",
+    "google-spreadsheet": "^3.3.0",
+    "typescript": "^4.8.3"
+  },
+  "devDependencies": {
+    "@types/google-spreadsheet": "^3.3.0",
+    "ts-node": "^10.9.1"
+  }
+}

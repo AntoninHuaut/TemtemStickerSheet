@@ -1,0 +1,5 @@
+bin/
+node_modules/
+.env
+googlesheet-credentials.json
+output*.txt
