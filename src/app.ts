@@ -80,13 +80,26 @@ function checkInputs(ownedList: ITemtemGDoc[], missingList: ITemtemGDoc[]) {
         if (!missing.temtem) return;
 
         const temtem = stripParenthesisContent(missing.temtem.toLowerCase());
-        if (haveDamaged.includes(temtem) && (allowDamagedIfNotOwnedAny || missing.nbDamaged > 0)) {
-            iLookFor.push({ temtem, type: 'damaged', nbDamaged: missing.nbDamaged });
-        }
         if (haveMint.includes(temtem) && (allowMintIfOwnedDamaged || missing.nbDamaged === 0)) {
             iLookFor.push({ temtem, type: 'mint', nbDamaged: missing.nbDamaged });
         }
+
+        if (
+            haveDamaged.includes(temtem) &&
+            (allowDamagedIfNotOwnedAny || missing.nbDamaged > 0) &&
+            iLookFor.filter((row) => row.temtem === temtem).length === 0
+        ) {
+            iLookFor.push({ temtem, type: 'damaged', nbDamaged: missing.nbDamaged });
+        }
     });
 
-    writeOutputTrade(youLookFor, iLookFor);
+    writeOutputTrade(
+        youLookFor,
+        iLookFor.sort((a, b) => {
+            const n = -a.type.localeCompare(b.type);
+            if (n !== 0) return n;
+
+            return a.temtem.localeCompare(b.temtem);
+        })
+    );
 }
