@@ -18,9 +18,9 @@ await doc.loadInfo();
 const sheet = doc.sheetsByIndex[0];
 const rows = await sheet.getRows();
 const { ownedList, missingList } = analyseRows(rows);
-
+const { youLookFor, iLookFor } = checkInputs(ownedList, missingList);
 writeOutputCollection(ownedList, missingList);
-checkInputs(ownedList, missingList);
+writeOutputTrade(youLookFor, iLookFor);
 
 function analyseRows(rows: GoogleSpreadsheetRow[]) {
     const ownedList: ITemtemGDoc[] = [];
@@ -93,13 +93,5 @@ function checkInputs(ownedList: ITemtemGDoc[], missingList: ITemtemGDoc[]) {
         }
     });
 
-    writeOutputTrade(
-        youLookFor,
-        iLookFor.sort((a, b) => {
-            const n = -a.type.localeCompare(b.type);
-            if (n !== 0) return n;
-
-            return a.temtem.localeCompare(b.temtem);
-        })
-    );
+    return { youLookFor, iLookFor };
 }
